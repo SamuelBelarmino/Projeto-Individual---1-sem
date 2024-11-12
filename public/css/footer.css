@@ -1,0 +1,42 @@
+
+
+.footer {
+    background-color: white;
+
+    position: relative;
+
+    box-shadow: 0 0 20px 1px rgba(0, 0, 0, .6);
+
+    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+}
+
+.content_footer {
+
+    max-width: 90%;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    text-align: center;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 1%;
+
+}
+
+.inf_center_footer,
+.inf_right_footer {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 17px;
+    color: black;
+
+}
+
+.logo_music img {
+    width: 150px;
+    height: 55px;
+}
