@@ -8,19 +8,19 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Cadastro - Music & Flutes</title>
+  <title>Login - Music & Flutes</title>
 
   <link rel="stylesheet" href="css/header2.css">
   
   <link rel="stylesheet" href="css/footer.css" />
 
-  <link rel="stylesheet" href="css/cadastro2.css" />
+  <link rel="stylesheet" href="css/login2.css" />
  
 </head>
 
 <body>
   <!--header inicio-->
- <header>
+  <header>
 
     <nav class="navbar">
 
@@ -43,10 +43,10 @@
 
         <span class="botao">
 
-          <span class="botao_login">
-            <button><a href="login2.html">Login</a></button>
+          <span class="botao_cadastro">
+            <button><a href="cadastro2.html">Cadastro</a></button>
           </span>
-         
+          
         </span>
 
       </div>
@@ -59,26 +59,18 @@
 <!--header fim-->
 
 
-<div class="cadastro">
-    <div><h1>Cadastre-se</h1></div>
+<div class="login">
+    <div><h1>Login</h1></div>
+        
         <div class="cadastros">
-            <label class="cadastross">Nome:</label>
-        <input placeholder="digite seu nome" type="text" id="input_nome">
-
-        <label class="cadastross">Sobrenome:</label>
-        <input placeholder="digite seu sobrenome" type="text" id="input_sobrenome">
-    
-        <label class="cadastross"></label> E-mail:</label> 
-        <input placeholder="email@email.com" type="text" id="input_email">
-    
-        <label class="cadastross"></label> Senha: </label>
-        <input placeholder="*******" type="password" id="input_senha">
-    
-        <label class="cadastross">Confirme sua senha:</label> 
-        <input placeholder="*******" type="password" id="input_confirmacao_senha">
+            <label class="cadastross"></label> E-mail:</label> 
+            <input placeholder="email@email.com" type="text" id="input_email">
+        
+            <label class="cadastross"></label> Senha: </label>
+            <input placeholder="*******" type="password" id="input_senha">
         </div>
-
-        <div><button onclick="cadastrar()">Cadastrar</button></div>
+    
+        <div><button onclick="entrar()">Entrar</button></div>
 </div>
 
   <!--footer inicio-->
