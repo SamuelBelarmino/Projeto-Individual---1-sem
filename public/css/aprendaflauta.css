@@ -33,7 +33,7 @@ body {
 .content {
     width: 90%; /* Define uma largura adequada para dispositivos móveis */
     max-width: 70%; /* Largura máxima */
-    background: linear-gradient(145deg, #ffffff, #f1f1f1);
+    background: linear-gradient(145deg, #ffffff, #e6e6e6);
     
     padding: 20px; /* Espaço interno */
     border-radius: 10px; /* Bordas arredondadas */
@@ -43,15 +43,17 @@ body {
     align-items: center; /* Centraliza o conteúdo */
     text-align: center;
     box-shadow: 17px 14px 8px 3px rgba(0, 0, 0, 0.25);
-    width: 96%; /* Faz com que os inputs ocupem quase toda a largura da div */
+    
 }
+
 
 /* Estilo para os texto e entradas */
 .content h1 {
-  
+    text-align: center;
+    text-shadow: 1px 3px 2px rgba(0, 0, 0, 0.3);
     font-size: 39px;
-    margin-top: 40px;
-    margin-bottom: 50px;
+    margin-top:13px;
+   
     color: black;
 }
 
@@ -67,26 +69,27 @@ body {
     margin-bottom: 1.5em; /* Define o espaçamento entre os parágrafos */
     line-height: 1.6; /* Define o espaçamento entre linhas */
     text-indent: 2em; /* Indentação da primeira linha */
-}
-
-.content img {
-    height: 150px;
-    width: 240px;
-    margin-right: 20px;
-}
-
-.texto a {
-    text-decoration: none;
-    color: black;
     font-weight: bold;
-    text-decoration: underline;
-    font-style: italic;     
-    font-size: 25px;
-    line-height: 3.6;
+    font-size: 20px;
 }
 
-.foto_inicial img{
+
+.imagens {
+    display: flex;
+    justify-content: space-between; /* Posiciona as imagens nas extremidades */
     width: 100%;
-    height: auto;
-    margin-bottom: 30px; 
+    padding: 0 10px;
+    margin: 37px;
+    
+}  
+
+.imagens img {
+    width: 80px; /* Ajuste o tamanho das imagens conforme necessário */
+    height: 72px;
+}
+
+.texto iframe {
+    margin-bottom: 40px;
+    box-shadow: 17px 14px 8px 3px rgba(0, 0, 0, 0.25);
+    border-radius: 10px; 
 }

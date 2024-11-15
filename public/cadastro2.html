@@ -79,7 +79,11 @@
         </div>
 
         <div><button onclick="cadastrar()">Cadastrar</button></div>
+
+        <span class="link_cadastro"> Já tem uma conta? <a href="login2.html">Login</a></span>
+        <span id="span_mensagem"></span>
 </div>
+
 
   <!--footer inicio-->
   <footer class="footer">
@@ -100,3 +104,98 @@
 </body>
 
 </html>
+
+<script>
+
+function cadastrar() {
+    var nome = input_nome.value;
+    var sobrenome =  input_sobrenome.value;
+    var email = input_email.value;
+    var senha = input_senha.value;
+    var confirmacao_senha = input_confirmacao_senha.value;
+    var mensagem = "";
+
+    var nome_sem_espacos = nome.replaceAll(' ', '');
+    var qtd_caracteres_nome = nome_sem_espacos.length;
+
+    var email_termina_com = email.endsWith('.com');
+    var email_termina_br = email.endsWith('.br');
+    var email_termina_school = email.endsWith('.school')
+    var email_possui_arroba = email.includes('@');
+
+    var senha_tem_c_especial = senha.includes("!") || senha.includes("@") || senha.includes("#") || senha.includes("$") || senha.includes("%") || senha.includes("&");
+
+    var senha_possui_numero = senha.includes("0") || senha.includes("1") || senha.includes("2") || 
+    senha.includes("3") || senha.includes("4") || senha.includes("5") ||
+    senha.includes("6") || senha.includes("7") || senha.includes("8") ||
+    senha.includes("9");
+
+    var senha_possui_maiuscula = senha != senha.toLowerCase();
+    var senha_possui_minuscula = senha != senha.toUpperCase();
+
+
+    if (nome === "" || sobrenome === "" || email === "" || senha === "" || confirmacao_senha === "") { 
+    mensagem = `<b style="color: red;" >• Todos os campos devem ser preenchidos</b> <br>`;
+} else {
+    if (qtd_caracteres_nome < 3) {
+        mensagem += `<b style="color: red;" >• O campo nome deve conter pelo menos 3 caracteres</b> <br>`;
+    }
+
+    if (email.includes(' ')) {
+        mensagem += `<b style="color: red;" >• O campo email não pode conter espaços</b> <br>`;
+    }
+
+    if (senha.includes(' ') || confirmacao_senha.includes(' ')) {
+        mensagem += `<b style="color: red;" >• Os campos de senha não podem conter espaços</b> <br>`;
+    }
+
+    if (!email_possui_arroba) {
+        mensagem += `<b style="color: red;" >• O campo email deve conter "@"</b> <br>`;
+    }
+
+    if (!email_termina_br && !email_termina_com && !email_termina_school) {
+        mensagem += `<b style="color: red;" >• O campo email deve terminar com ".com", ".br" ou ".school"</b> <br>`;
+    }
+
+    if (senha.length < 6) {
+        mensagem += `<b style="color: red;" >• A senha precisa conter mais de 6 caracteres</b> <br>`;
+    }
+
+    if (!senha_tem_c_especial) {
+        mensagem += `<b style="color: red;" >• Sua senha está fraca <br>
+                     A senha precisa ter pelo menos 1 caractere especial. <br> 
+                     Ex: !, @, #, $, %, &</b> <br>`;
+    }
+
+    if (!senha_possui_numero) {
+        mensagem += `<b style="color: red;" >• Sua senha está fraca <br>
+                     A senha precisa incluir pelo menos 1 número</b> <br>`;
+    }
+
+    if (!senha_possui_minuscula) {
+        mensagem += `<b style="color: red;" >• A senha precisa conter pelo menos 1 caractere minúsculo</b> <br>`;
+    }
+
+    if (!senha_possui_maiuscula) {
+        mensagem += `<b style="color: red;" >• A senha precisa conter pelo menos 1 caractere maiúsculo</b> <br>`;
+    }
+
+    if (senha !== confirmacao_senha) {    
+        mensagem += `<b style="color: red;" >• A confirmação da senha não contém os mesmos caracteres da sua senha</b> <br>`;
+    }
+}
+
+
+        if (mensagem) {
+            span_mensagem.innerHTML = mensagem;
+        } else {
+            alert(`• Usuário cadastrado com sucesso`);
+            span_mensagem.innerHTML = ``;
+        }
+
+
+//email tem que ter @, terminar com .com .br
+}   
+
+
+</script>

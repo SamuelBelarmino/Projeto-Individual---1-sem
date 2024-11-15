@@ -70,3 +70,12 @@ body {
     width: 70%;
 }
 
+.cadastro a{
+    text-shadow: 1px 3px 2px rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+    color: black;
+}
+
+.link_cadastro {
+    margin: 10px;
+}

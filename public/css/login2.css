@@ -31,6 +31,12 @@ body {
     text-shadow: 1px 3px 2px rgba(0, 0, 0, 0.3);
 }
 
+.login a {
+    text-shadow: 1px 3px 2px rgba(0, 0, 0, 0.3);
+    font-weight: bold; /* Deixa o texto em negrito */
+    color: black;
+}
+
 .login input,
 .login button {
     width: 96%; /* Faz com que os inputs ocupem quase toda a largura da div */
@@ -69,3 +75,6 @@ body {
     width: 70%;
 }
 
+.link_cadastro {
+    margin: 10px;
+}
