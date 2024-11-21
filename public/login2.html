@@ -25,16 +25,16 @@
     <nav class="navbar">
 
       <div>
-        <a href="pagina_inicial.html">
+        <a href="index.html">
 
         <div class="logo">
-          <img src="../public/assets/Music & Flutes - logo.png" alt="Logo" />
+          <img src="assets/Music & Flutes - logo.png" alt="Logo" />
         </div>
 
         </a>
       </div>
 
-        <span><a href="pagina_inicial.html">Página Inicial</a></span>
+        <span><a href="index.html">Página Inicial</a></span>
 
         <span><a href="aprenda.html">Aprenda com instrumento</a></span>
         
@@ -64,10 +64,10 @@
         
         <div class="cadastros">
             <label class="cadastross"></label> E-mail:</label> 
-            <input placeholder="email@email.com" type="text" id="input_email">
+            <input placeholder="email@email.com" type="text" id="email_input">
         
             <label class="cadastross"></label> Senha: </label>
-            <input placeholder="*******" type="password" id="input_senha">
+            <input placeholder="*******" type="password" id="senha_input">
         </div>
     
         <div><button onclick="entrar()">Entrar</button></div>
@@ -77,7 +77,7 @@
 
 <!-- webdataviz -->
 
-  <div class="login">
+  <!-- <div class="login">
     <div class="alerta_erro">
         <div class="card_erro" id="cardErro">
             <span id="mensagem_erro"></span>
@@ -105,7 +105,7 @@
             <div id="div_erros_login"></div>
         </div>
     </div>
-  </div>
+  </div> -->
 
   <!--footer inicio-->
   <footer class="footer">
@@ -113,7 +113,7 @@
     <div class="content_footer">
 
       <div class="logo_music">
-        <img src="../public/assets/Music & Flutes - logo.png"/>
+        <img src="assets/Music & Flutes - logo.png"/>
       </div>
 
       <div class="inf_center_footer">All rights reserved by Music & Flutes</div>
@@ -126,3 +126,76 @@
 </body>
 
 </html>
+
+<script>
+
+  function entrar() {
+      // aguardar();
+
+      var emailVar = email_input.value;
+      var senhaVar = senha_input.value;
+
+      if (emailVar == "" || senhaVar == "") {
+          cardErro.style.display = "block"
+          mensagem_erro.innerHTML = `Todos os campos devem ser preenchidos`;
+          // finalizarAguardar();
+          return false;
+      }
+      else {
+          setInterval(sumirMensagem, 5000)
+      }
+
+      console.log("FORM LOGIN: ", emailVar);
+      console.log("FORM SENHA: ", senhaVar);
+
+      fetch("/usuarios/autenticar", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+              emailServer: emailVar,
+              senhaServer: senhaVar
+          })
+      }).then(function (resposta) {
+          console.log("ESTOU NO THEN DO entrar()!")
+
+          if (resposta.ok) {
+              console.log(resposta);
+
+              resposta.json().then(json => {
+                  console.log(json);
+                  console.log(JSON.stringify(json));
+                  sessionStorage.ID_USUARIO = json.idCadastro;
+                  sessionStorage.NOME_USUARIO = json.nome;
+                  sessionStorage.SOBRENOME_USUARIO = json.sobrenome;
+                  sessionStorage.EMAIL_USUARIO = json.email
+
+                  setTimeout(function () {
+                      window.location = "teoria.html";
+                  }, 1000); // apenas para exibir o loading
+
+              });
+
+          } else {
+
+              console.log("Houve um erro ao tentar realizar o login!");
+
+              resposta.text().then(texto => {
+                  console.error(texto);
+                  // finalizarAguardar(texto);
+              });
+          }
+
+      }).catch(function (erro) {
+          console.log(erro);
+      })
+
+      return false;
+  }
+
+  function sumirMensagem() {
+      cardErro.style.display = "none"
+  }
+
+</script>

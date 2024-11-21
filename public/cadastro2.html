@@ -25,16 +25,16 @@
     <nav class="navbar">
 
       <div>
-        <a href="pagina_inicial.html">
+        <a href="index.html">
 
         <div class="logo">
-          <img src="../public/assets/Music & Flutes - logo.png" alt="Logo" />
+          <img src="assets/Music & Flutes - logo.png" alt="Logo" />
         </div>
 
         </a>
       </div>
 
-        <span><a href="pagina_inicial.html">Página Inicial</a></span>
+        <span><a href="index.html">Página Inicial</a></span>
 
         <span><a href="aprenda.html">Aprenda com instrumento</a></span>
         
@@ -91,7 +91,7 @@
     <div class="content_footer">
 
       <div class="logo_music">
-        <img src="../public/assets/Music & Flutes - logo.png"/>
+        <img src="assets/Music & Flutes - logo.png"/>
       </div>
 
       <div class="inf_center_footer">All rights reserved by Music & Flutes</div>
@@ -108,44 +108,44 @@
 <script>
 
 function cadastrar() {
-    var nome = input_nome.value;
-    var sobrenome =  input_sobrenome.value;
-    var email = input_email.value;
-    var senha = input_senha.value;
-    var confirmacao_senha = input_confirmacao_senha.value;
+    var nomeVar = input_nome.value;
+    var sobrenomeVar =  input_sobrenome.value;
+    var emailVar = input_email.value;
+    var senhaVar = input_senha.value;
+    var confirmacao_senhaVar = input_confirmacao_senha.value;
     var mensagem = "";
 
-    var nome_sem_espacos = nome.replaceAll(' ', '');
+    var nome_sem_espacos = nomeVar.replaceAll(' ', '');
     var qtd_caracteres_nome = nome_sem_espacos.length;
 
-    var email_termina_com = email.endsWith('.com');
-    var email_termina_br = email.endsWith('.br');
-    var email_termina_school = email.endsWith('.school')
-    var email_possui_arroba = email.includes('@');
+    var email_termina_com = emailVar.endsWith('.com');
+    var email_termina_br = emailVar.endsWith('.br');
+    var email_termina_school = emailVar.endsWith('.school')
+    var email_possui_arroba = emailVar.includes('@');
 
-    var senha_tem_c_especial = senha.includes("!") || senha.includes("@") || senha.includes("#") || senha.includes("$") || senha.includes("%") || senha.includes("&");
+    var senha_tem_c_especial = senhaVar.includes("!") || senhaVar.includes("@") || senhaVar.includes("#") || senhaVar.includes("$") || senhaVar.includes("%") || senhaVar.includes("&");
 
-    var senha_possui_numero = senha.includes("0") || senha.includes("1") || senha.includes("2") || 
-    senha.includes("3") || senha.includes("4") || senha.includes("5") ||
-    senha.includes("6") || senha.includes("7") || senha.includes("8") ||
-    senha.includes("9");
+    var senha_possui_numero = senhaVar.includes("0") || senhaVar.includes("1") || senhaVar.includes("2") || 
+    senhaVar.includes("3") || senhaVar.includes("4") || senhaVar.includes("5") ||
+    senhaVar.includes("6") || senhaVar.includes("7") || senhaVar.includes("8") ||
+    senhaVar.includes("9");
 
-    var senha_possui_maiuscula = senha != senha.toLowerCase();
-    var senha_possui_minuscula = senha != senha.toUpperCase();
+    var senha_possui_maiuscula = senhaVar != senhaVar.toLowerCase();
+    var senha_possui_minuscula = senhaVar != senhaVar.toUpperCase();
 
 
-    if (nome === "" || sobrenome === "" || email === "" || senha === "" || confirmacao_senha === "") { 
+    if (nomeVar == "" || sobrenomeVar == "" || emailVar == "" || senhaVar == "" || confirmacao_senhaVar == "") { 
     mensagem = `<b style="color: red;" >• Todos os campos devem ser preenchidos</b> <br>`;
 } else {
     if (qtd_caracteres_nome < 3) {
         mensagem += `<b style="color: red;" >• O campo nome deve conter pelo menos 3 caracteres</b> <br>`;
     }
 
-    if (email.includes(' ')) {
+    if (emailVar.includes(' ')) {
         mensagem += `<b style="color: red;" >• O campo email não pode conter espaços</b> <br>`;
     }
 
-    if (senha.includes(' ') || confirmacao_senha.includes(' ')) {
+    if (senhaVar.includes(' ') || confirmacao_senhaVar.includes(' ')) {
         mensagem += `<b style="color: red;" >• Os campos de senha não podem conter espaços</b> <br>`;
     }
 
@@ -157,7 +157,7 @@ function cadastrar() {
         mensagem += `<b style="color: red;" >• O campo email deve terminar com ".com", ".br" ou ".school"</b> <br>`;
     }
 
-    if (senha.length < 6) {
+    if (senhaVar.length < 6) {
         mensagem += `<b style="color: red;" >• A senha precisa conter mais de 6 caracteres</b> <br>`;
     }
 
@@ -180,22 +180,44 @@ function cadastrar() {
         mensagem += `<b style="color: red;" >• A senha precisa conter pelo menos 1 caractere maiúsculo</b> <br>`;
     }
 
-    if (senha !== confirmacao_senha) {    
+    if (senhaVar != confirmacao_senhaVar) {    
         mensagem += `<b style="color: red;" >• A confirmação da senha não contém os mesmos caracteres da sua senha</b> <br>`;
     }
 }
 
 
-        if (mensagem) {
+        if (mensagem != '') {
             span_mensagem.innerHTML = mensagem;
         } else {
-            alert(`• Usuário cadastrado com sucesso`);
-            span_mensagem.innerHTML = ``;
-        }
+          // Enviando o valor da nova input
+    fetch("/usuarios/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
 
+        nomeServer: nomeVar,
+        sobrenomeServer: sobrenomeVar,
+        emailServer: emailVar,
+        senhaServer: senhaVar,
+   
+        
+      }),
+    })
+      
+    alert(`• Usuário cadastrado com sucesso`);
+    span_mensagem.innerHTML = ``;
+
+    return false;
+  }
+  
 
 //email tem que ter @, terminar com .com .br
 }   
+
 
 
 </script>
