@@ -41,6 +41,8 @@
         <span><a href="aprendaflauta.html">Aprenda flauta atraves de vídeos</a></span>
         
         <span><a href="teste.html">Teste seu conhecimento</a></span>
+
+        <span><a href="dash.html">Estatísticas</a></span>
         
       <div class="container-botao">
 
@@ -169,48 +171,72 @@
       var formula = select_formula.value;
       
       lista_resultado = [];
-        lista_resultado.push(nota, clave, duracao, formula);
-        
-    //    var nota_certa = select_nota == "sol";
-    //    var clave_certa = select_clave == "fa";
+      lista_resultado.push(nota, clave, duracao, formula);
       
-        lista_historico.push(nota, clave, duracao, formula);
-        
-    //    var nota_certa = select_nota == "sol";
-    //    var clave_certa = select_clave == "fa";
-    //    var duracao_certa = select_duracao == "0";
-    //    var formula_certa = select_formula == "3";
+      var qtd_acerto = 0;
+      var qtd_erro = 0;
+
 
     if (nota == "#" || clave  == "#"|| duracao  == "#"|| formula  == "#") {
-            mensagem = `Preencha todos os campos.`;
+            alert (`Preencha todos os campos.`);
           } else {
       
         for (var index = 0; index < lista_resultado.length; index++) {
             var resposta_atual = lista_resultado[index];
             var resposta_certa_atual = lista_questionario[index];
 
-           if(resposta_atual != resposta_certa_atual){
-           mensagem += `${index +1}. Errou. `;
-          } else{
-            mensagem += `${index +1}. Acertou. `;
-          }
-       
+              if(resposta_atual != resposta_certa_atual){
+              qtd_erro++
+              mensagem += `${index +1}. Errou. `;
+              } else{
+              qtd_acerto++
+              mensagem += `${index +1}. Acertou. `;
+              }
+          
+        }
       }
-    }
-        
+      
+      lista_historico.push(mensagem);
+
         span_mensagem.innerHTML = mensagem;
+
+
+
+        fetch("/usuarios/resultado", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+
+        qtdAcertos: qtd_acerto,
+        qtdErros: qtd_erro,
+        fkCadastro: sessionStorage.ID_USUARIO     
+    
+      }),
+    })
+      
     }
     
+
+
+
     function historico() {
         var mensagem2 = "";
         
         for (var index = 0; index < lista_historico.length; index++) {
             
-            if (index % 4 == 0)
-            mensagem2 += `${index +1}- ${lista_historico}<br>`;
-        }
+           
+            mensagem2 += `${lista_historico[index]}<br>`;
+        
         
         span_mensagem2.innerHTML = mensagem2;
     }
+  }
+
+
+  
 
 </script>

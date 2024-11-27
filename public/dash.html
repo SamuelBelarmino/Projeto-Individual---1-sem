@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+
+    <link rel="icon" href="assets/flauta.png" type="image/x-icon" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Estatísticas - Music & Flutes</title>
+
+    <link rel="stylesheet" href="css/header2.css" />
+
+    <link rel="stylesheet" href="css/footer.css" />
+
+    <link rel="stylesheet" href="css/dash.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body onload="carregarEstatisticas()">
+    <div class="background"></div>
+    <!--header inicio-->
+    <header>
+      <nav class="navbar">
+        <div>
+          <a href="index.html">
+            <div class="logo">
+              <img src="assets/Music & Flutes - logo.png" alt="Logo" />
+            </div>
+          </a>
+        </div>
+
+        <span><a href="teoria.html">Teoria musical</a></span>
+
+        <span
+          ><a href="aprendaflauta.html"
+            >Aprenda flauta atraves de vídeos</a
+          ></span
+        >
+
+        <span><a href="teste.html">Teste seu conhecimento</a></span>
+
+        <span><a href="dash.html">Estatísticas</a></span>
+
+        <div class="container-botao">
+          <span class="botao">
+            <span class="botao_sair">
+              <a href="login2.html"><img src="assets/saida.png" alt="" /></a>
+            </span>
+          </span>
+        </div>
+      </nav>
+    </header>
+    <!--header fim-->
+
+    <div class="content">
+      <div class="indicadores">
+        <h2>Seu nível</h2>
+
+        <p>• Se você errou 1 questão = Profissional</p>
+        <p>• Se você errou 2 questões = Avançado</p>
+        <p>• Se você errou 3 questões = Intermediário</p>
+        <p>• Se você errou 4 questões = Iniciante</p>
+      </div>
+
+      <div class="graficopizza">
+        <canvas id="grafico_pizza" width="450px"></canvas>
+      </div>
+    </div>
+
+    <!--footer inicio-->
+    <footer class="footer">
+      <div class="content_footer">
+        <div class="logo_music">
+          <img src="assets/Music & Flutes - logo.png" />
+        </div>
+
+        <div class="inf_center_footer">
+          All rights reserved by Music & Flutes
+        </div>
+
+        <div class="inf_right_footer">© 2024</div>
+      </div>
+    </footer>
+    <!--footer fim-->
+  </body>
+</html>
+
+<script>
+  // const graficoPizza = document.getElementById("grafico_pizza");
+
+  // new Chart(graficoPizza, {
+  //     type: "pie",
+  //     data: {
+  //       labels: ["Acertos ", "Erros"],
+  //       datasets: [
+  //         {
+  //           label: "",
+  //           data: [17, 1], // Valores para cada fatia
+  //           backgroundColor: [
+  //             // Cores para cada fatia
+  //             "rgba(54, 162, 235, 0.2)",
+  //             "rgba(255, 99, 132, 0.2)",
+  //             //'rgba(255, 206, 86, 0.2)',
+  //             //'rgba(75, 192, 192, 0.2)'
+  //           ],
+  //           borderColor: [
+  //             // Cores das bordas
+  //             "rgba(54, 162, 235, 1)",
+  //             "rgba(255, 99, 132, 1)",
+  //             //'rgba(255, 206, 86, 1)',
+  //             //'rgba(75, 192, 192, 1)'
+  //           ],
+  //           borderWidth: 1, // Largura da borda
+  //         },
+  //       ],
+  //     },
+  //     options: {
+  //   plugins: {
+  //     title: {
+  //       display: true, // Define se o título deve ser exibido
+  //       text: "Proficiência: erros e acertos do seu teste", // O texto do título
+  //       font: {
+  //         size: 27, // Tamanho da fonte do título
+  //         weight: "bold", // Peso da fonte do título
+  //       },
+  //       color: "black", // Cor do título
+  //       padding: {
+  //         top: 10, // Espaçamento acima do título
+  //         bottom: 40, // Espaçamento abaixo do título
+  //       },
+  //     },
+  //     legend: {
+  //       display: true, // Exibe a legenda
+  //       position: "bottom", // Coloca a legenda abaixo do gráfico
+  //       labels: {
+  //         padding: 30, // Espaçamento entre o gráfico e os labels
+  //         font: {
+  //           size: 14, // Tamanho da fonte da legenda
+  //         },
+  //       },
+  //     },
+  //   },
+
+  // },
+
+  //   });
+
+  function carregarEstatisticas() {
+    const idCadastro = sessionStorage.ID_USUARIO;
+
+    fetch(`/usuarios/listar_resultado/${idCadastro}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((resposta) => {
+        if (resposta.ok) {
+          return resposta.json();
+        } else {
+          throw new Error(`Erro ao buscar estatísticas: ${resposta.status}`);
+        }
+      })
+      .then((estatisticas) => {
+        console.log("Estatísticas recebidas:", estatisticas);
+
+        renderizarGrafico(estatisticas);
+      })
+      .catch((erro) => {
+        console.error("Erro ao carregar estatísticas:", erro);
+      });
+  }
+
+  function renderizarGrafico(estatisticas) {
+    const ctx = document.getElementById("grafico_pizza").getContext("2d");
+
+    var lista_dados = [estatisticas[0].qtdAcertos, estatisticas[0].qtdErros]
+    new Chart(ctx, {
+      type: "pie",
+      data: {
+        labels: ["Acertos", "Erros"],
+        datasets: [
+          {            
+            data: lista_dados,
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        scales: {
+         
+          
+        },
+      },
+    });
+  }
+</script>

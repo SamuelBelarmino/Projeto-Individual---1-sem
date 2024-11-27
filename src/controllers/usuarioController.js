@@ -25,10 +25,10 @@ function autenticar(req, res) {
 
                                 // if (resultadoAquarios.length > 0) {
                                     res.json({
-                                        id: resultadoAutenticar[0].idCadastro,
+                                        idCadastro: resultadoAutenticar[0].idCadastro,
                                         nome: resultadoAutenticar[0].nome,
                                         sobrenome: resultadoAutenticar[0].sobrenome,
-                                        email: resultadoAutenticar[0].email,
+                                        email: resultadoAutenticar[0].email
                                         // cpf: resultadoAutenticar[0].cpf,
                                         // aquarios: resultadoAquarios
                                     });
@@ -91,7 +91,55 @@ function cadastrar(req, res) {
     }
 }
 
+
+function cadastrar_resultado(req, res) {
+    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
+    var acertos = req.body.qtdAcertos;
+    var erros = req.body.qtdErros;
+    var fkCadastro = req.body.fkCadastro;
+        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+        usuarioModel.cadastrar_resultado(acertos, erros, fkCadastro)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar o cadastro! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+
+    function listar_resultado (req, res) {
+        const {idCadastro} = req.params;  // Só o idUsuario é necessário para buscar as notas
+    
+    
+        usuarioModel.listar_resultado(idCadastro)
+            .then(function (resultado) {
+                if (resultado.length > 0) {
+                    // Se encontrar resultados, retorna as Notas
+                    res.status(200).json(resultado);
+                } else {
+                    // Caso contrário, retorna uma resposta vazia (nenhum favorito encontrado)
+                    res.status(204).json([]);
+                }
+            })
+            .catch(function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao buscar as notas! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            });
+    }
+
+
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    cadastrar_resultado,
+    listar_resultado
 }
