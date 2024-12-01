@@ -66,8 +66,8 @@
 
             <!-- <span id="detalhes">Acertos</span>
                     <span id="detalhes">Erros</span> -->
-            <span>Qtd. Tentativas</span>
-            <span>Média de Acertos</span>
+            <span id="detalhes_qtd"></span>
+            <span id="detalhes_media"></span>
           </div>
 
           <h2>Seu nível</h2>
@@ -103,9 +103,8 @@
 </html>
 
 <script>
+  const idCadastro = sessionStorage.ID_USUARIO;
   function carregarEstatisticas() {
-    const idCadastro = sessionStorage.ID_USUARIO;
-
     fetch(`/usuarios/listar_resultado/${idCadastro}`, {
       method: "GET",
       headers: {
@@ -122,6 +121,54 @@
       .then((estatisticas) => {
         console.log("Estatísticas recebidas:", estatisticas);
         renderizarGrafico(estatisticas);
+        getTentativas();
+        getMedia();
+      })
+      .catch((erro) => {
+        console.error("Erro ao carregar estatísticas:", erro);
+      });
+  }
+
+  function getTentativas() {
+    fetch(`/usuarios/listar_tentativas/${idCadastro}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((resposta) => {
+        if (resposta.ok) {
+          return resposta.json();
+        } else {
+          throw new Error(`Erro ao buscar estatísticas: ${resposta.status}`);
+        }
+      })
+      .then((estatisticas) => {
+        const tentativas = estatisticas[0].qtd_tentativas ?? 0;
+        detalhes_qtd.innerHTML = ` <p style="font-size: 14px;">Quantidade Tentativas: <br><br> ${tentativas}`;
+      })
+      .catch((erro) => {
+        console.error("Erro ao carregar estatísticas:", erro);
+      });
+  }
+
+  function getMedia() {
+    fetch(`/usuarios/listar_medias/${idCadastro}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((resposta) => {
+        if (resposta.ok) {
+          return resposta.json();
+        } else {
+          throw new Error(`Erro ao buscar estatísticas: ${resposta.status}`);
+        }
+      })
+      .then((estatisticas) => {
+        const media = estatisticas[0].media_acertos ?? 0;
+        detalhes_media.innerHTML = ` <p style="font-size: 14px;">Média de Acertos: <br><br> ${media}`;
       })
       .catch((erro) => {
         console.error("Erro ao carregar estatísticas:", erro);
@@ -134,10 +181,10 @@
     var lista_dados = [estatisticas[0].qtdAcertos, estatisticas[0].qtdErros];
 
     detalhes.innerHTML = `
-        <p><b style="color: blue;">Acertou: </b>${
+        <p><b style="color: #00BFFF;">Acertou: </b>${
           !estatisticas[0].qtdAcertos ? 0 : estatisticas[0].qtdAcertos
         }</p>
-        <p><b style="color: red;" >Errou: </b>${
+        <p><b style="color: #FA8072;" >Errou: </b>${
           !estatisticas[0].qtdErros ? 0 : estatisticas[0].qtdErros
         }</p>
       `;
@@ -150,6 +197,8 @@
           {
             data: lista_dados,
             borderWidth: 1,
+            backgroundColor: ["#00BFFF", "#FA8072"],
+            // borderColor: ["#00008B", "#8B0000"],
           },
         ],
       },

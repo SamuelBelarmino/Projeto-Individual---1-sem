@@ -75,11 +75,31 @@ function ver_historico(idCadastro) {
     return database.executar(instrucaoSql);
 }
 
+function listar_tentativas(idCadastro) {
+    
+    var instrucaoSql = `
+    SELECT COUNT(idHistorico) as qtd_tentativas FROM historico WHERE fkCadastro = ${idCadastro};
+    `;
+   
+    return database.executar(instrucaoSql);
+}
+
+function listar_medias(idCadastro) {
+    
+    var instrucaoSql = `
+    SELECT TRUNCATE(avg(qtdAcertos), 2) as media_acertos FROM resultado JOIN cadastro ON fkCadastro = idCadastro WHERE fkCadastro = ${idCadastro};
+    `;
+   
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     autenticar,
     cadastrar,
     cadastrar_resultado,
     listar_resultado,
     historico,
-    ver_historico
+    ver_historico,
+    listar_medias,
+    listar_tentativas
 };

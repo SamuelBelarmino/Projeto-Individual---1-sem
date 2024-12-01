@@ -22,10 +22,18 @@ router.get("/listar_resultado/:idCadastro", function (req, res) {
 
 router.post("/historico", function (req, res) {
     usuarioController.historico(req, res);
-})
+});
 
 router.get("/ver_historico/:idCadastro", function (req, res) {
     usuarioController.ver_historico(req, res);
-})
+});
+
+router.get("/listar_tentativas/:idCadastro", function (req, res) {
+    usuarioController.listar_tentativas(req, res);
+});
+
+router.get("/listar_medias/:idCadastro", function (req, res) {
+    usuarioController.listar_medias(req, res);
+});
 
 module.exports = router;

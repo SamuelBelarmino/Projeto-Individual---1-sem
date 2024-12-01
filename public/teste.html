@@ -193,9 +193,8 @@
           fkCadastro: sessionStorage.ID_USUARIO,
         }),
       });
-    }
 
-    lista_historico.push(mensagem);
+      lista_historico.push(mensagem);
 
     fetch("/usuarios/historico", {
       method: "POST",
@@ -205,12 +204,16 @@
       body: JSON.stringify({
         // crie um atributo que recebe o valor recuperado aqui
         // Agora vá para o arquivo routes/usuario.js
-
+        
         linha_historico: lista_historico[0],
         fkCadastro: sessionStorage.ID_USUARIO,
       }),
     });
 
+
+    }
+
+    
     span_mensagem.innerHTML = mensagem;
   }
 
