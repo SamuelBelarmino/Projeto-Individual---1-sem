@@ -36,8 +36,8 @@ body {
     padding: 65px;
     border-radius: 10px;
     margin: 5% auto;
-    display: flex
-;
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
     text-align: center;
     box-shadow: 17px 14px 8px 3px rgba(0, 0, 0, 0.25);
@@ -46,11 +46,11 @@ body {
 
 .indicadores {
     border-radius: 10px;
-    background-color: white;
+    /* background-color: white; */
     padding: 20px;
     width: 42%;
-    border: solid;
-
+    /* border: solid; */
+    background: linear-gradient(349deg, #e1e1e1, #ffffff);
     display: flex; /* Define o contêiner como flexível */
     flex-direction: column; /* Garante que os itens fiquem em uma coluna */
     justify-content: center; /* Centraliza verticalmente o conteúdo */
@@ -65,23 +65,44 @@ body {
     
 }
 
+.detalhes {
+    
+    /* justify-content: center;
+    align-items: center; */
+
+    background: linear-gradient(349deg, #e1e1e1, #ffffff);
+    border-radius: 10px;
+
+    padding: 8px 20px 8px 20px;
+    
+    flex-direction: column;
+}
 
 
+
+.grafico {
+    display: flex;
+    align-items: center;
+    width: 500px;
+    height: 500px;
+    
+}
 
 /* Estilo para os texto e entradas */
 .content h1 {
     display: flex;
     justify-content: center;
     font-size: 39px;
-    margin-top: 40px;
-    margin-bottom: 50px;
+   
     color: black;
+    margin: 0;
+    margin-bottom: 55px;
 }
 
 .content h2 {
     display: flex;
     justify-content: center;
-    margin-top: 0px;
+    margin-top: 50px;
     font-size: 36px;
 }
 
@@ -93,5 +114,25 @@ body {
     
 }
 
- 
 
+.kpi {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+}
+
+.kpi span {
+    /* background-color: white; */
+    border-radius: 10px;
+    /* border: solid; */
+    /* display: flex; */
+    width: 100px;
+    height: 111px;
+    background: linear-gradient(349deg, #e1e1e1, #ffffff);
+}
+
+.dash {
+ display: flex;
+ flex-direction: row;
+ justify-content: space-between;
+}

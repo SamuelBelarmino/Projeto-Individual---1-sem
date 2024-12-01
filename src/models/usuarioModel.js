@@ -42,9 +42,44 @@ function listar_resultado(idCadastro) {
     return database.executar(instrucaoSql);
 }
 
+
+function historico(linha_historico, fkCadastro) {
+    
+    var instrucaoSql = `
+        INSERT INTO historico (linha_historico, fkCadastro) VALUES ('${linha_historico}', '${fkCadastro}');
+    `;
+   
+    return database.executar(instrucaoSql);
+}
+
+
+function listar_resultado(idCadastro) {
+    
+    var instrucaoSql = `
+      SELECT SUM(qtdAcertos) AS qtdAcertos, SUM(qtdErros) AS qtdErros
+      FROM resultado WHERE fkCadastro = ${idCadastro};
+    `;
+   
+    return database.executar(instrucaoSql);
+}
+
+function ver_historico(idCadastro) {
+    
+    var instrucaoSql = `
+
+    SELECT * FROM historico 
+    WHERE fkCadastro = ${idCadastro};
+
+    `;
+   
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     autenticar,
     cadastrar,
     cadastrar_resultado,
-    listar_resultado
+    listar_resultado,
+    historico,
+    ver_historico
 };

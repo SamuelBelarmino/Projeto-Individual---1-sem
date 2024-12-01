@@ -136,10 +136,57 @@ function cadastrar_resultado(req, res) {
             });
     }
 
+    function historico (req, res) {
+        // const {linha_historico, fkCadastro} = req.params;  // Só o idUsuario é necessário para buscar as notas
+    
+        var linha_historico = req.body.linha_historico;
+        var fkCadastro = req.body.fkCadastro;
+       
+       
+    
+        usuarioModel.historico(linha_historico, fkCadastro)
+            .then(function (resultado) {
+                if (resultado.length > 0) {
+                    // Se encontrar resultados, retorna as Notas
+                    res.status(200).json(resultado);
+                } else {
+                    // Caso contrário, retorna uma resposta vazia (nenhum favorito encontrado)
+                    res.status(204).json([]);
+                }
+            })
+            .catch(function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao buscar as notas! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            });
+    }
+
+    function ver_historico (req, res) {
+        const {idCadastro} = req.params;  // Só o idUsuario é necessário para buscar as notas
+    
+    
+        usuarioModel.ver_historico(idCadastro)
+            .then(function (resultado) {
+                if (resultado.length > 0) {
+                    // Se encontrar resultados, retorna as Notas
+                    res.status(200).json(resultado);
+                } else {
+                    // Caso contrário, retorna uma resposta vazia (nenhum favorito encontrado)
+                    res.status(204).json([]);
+                }
+            })
+            .catch(function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao buscar as notas! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            });
+    }
 
 module.exports = {
     autenticar,
     cadastrar,
     cadastrar_resultado,
-    listar_resultado
+    listar_resultado,
+    historico,
+    ver_historico
 }

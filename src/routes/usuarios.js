@@ -20,5 +20,12 @@ router.get("/listar_resultado/:idCadastro", function (req, res) {
     usuarioController.listar_resultado(req, res);
 });
 
+router.post("/historico", function (req, res) {
+    usuarioController.historico(req, res);
+})
+
+router.get("/ver_historico/:idCadastro", function (req, res) {
+    usuarioController.ver_historico(req, res);
+})
 
 module.exports = router;

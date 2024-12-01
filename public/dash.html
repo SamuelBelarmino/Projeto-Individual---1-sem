@@ -55,17 +55,32 @@
     <!--header fim-->
 
     <div class="content">
-      <div class="indicadores">
-        <h2>Seu nível</h2>
+      <h1>Dashboard</h1>
 
-        <p>• Se você errou 1 questão = Profissional</p>
-        <p>• Se você errou 2 questões = Avançado</p>
-        <p>• Se você errou 3 questões = Intermediário</p>
-        <p>• Se você errou 4 questões = Iniciante</p>
-      </div>
+      <div class="dash">
+        <div class="indicadores">
+          <div class="kpi">
+            <div class="detalhes" id="detalhes">
+              <!-- Os números de acertos e erros serão exibidos aqui -->
+            </div>
 
-      <div class="graficopizza">
-        <canvas id="grafico_pizza" width="450px"></canvas>
+            <!-- <span id="detalhes">Acertos</span>
+                    <span id="detalhes">Erros</span> -->
+            <span>Qtd. Tentativas</span>
+            <span>Média de Acertos</span>
+          </div>
+
+          <h2>Seu nível</h2>
+
+          <p>• Se você errou 1 questão = Profissional</p>
+          <p>• Se você errou 2 questões = Avançado</p>
+          <p>• Se você errou 3 questões = Intermediário</p>
+          <p>• Se você errou 4 questões = Iniciante</p>
+        </div>
+
+        <div class="grafico">
+          <canvas id="grafico_pizza" width="450px"></canvas>
+        </div>
       </div>
     </div>
 
@@ -88,65 +103,6 @@
 </html>
 
 <script>
-  // const graficoPizza = document.getElementById("grafico_pizza");
-
-  // new Chart(graficoPizza, {
-  //     type: "pie",
-  //     data: {
-  //       labels: ["Acertos ", "Erros"],
-  //       datasets: [
-  //         {
-  //           label: "",
-  //           data: [17, 1], // Valores para cada fatia
-  //           backgroundColor: [
-  //             // Cores para cada fatia
-  //             "rgba(54, 162, 235, 0.2)",
-  //             "rgba(255, 99, 132, 0.2)",
-  //             //'rgba(255, 206, 86, 0.2)',
-  //             //'rgba(75, 192, 192, 0.2)'
-  //           ],
-  //           borderColor: [
-  //             // Cores das bordas
-  //             "rgba(54, 162, 235, 1)",
-  //             "rgba(255, 99, 132, 1)",
-  //             //'rgba(255, 206, 86, 1)',
-  //             //'rgba(75, 192, 192, 1)'
-  //           ],
-  //           borderWidth: 1, // Largura da borda
-  //         },
-  //       ],
-  //     },
-  //     options: {
-  //   plugins: {
-  //     title: {
-  //       display: true, // Define se o título deve ser exibido
-  //       text: "Proficiência: erros e acertos do seu teste", // O texto do título
-  //       font: {
-  //         size: 27, // Tamanho da fonte do título
-  //         weight: "bold", // Peso da fonte do título
-  //       },
-  //       color: "black", // Cor do título
-  //       padding: {
-  //         top: 10, // Espaçamento acima do título
-  //         bottom: 40, // Espaçamento abaixo do título
-  //       },
-  //     },
-  //     legend: {
-  //       display: true, // Exibe a legenda
-  //       position: "bottom", // Coloca a legenda abaixo do gráfico
-  //       labels: {
-  //         padding: 30, // Espaçamento entre o gráfico e os labels
-  //         font: {
-  //           size: 14, // Tamanho da fonte da legenda
-  //         },
-  //       },
-  //     },
-  //   },
-
-  // },
-
-  //   });
-
   function carregarEstatisticas() {
     const idCadastro = sessionStorage.ID_USUARIO;
 
@@ -165,7 +121,6 @@
       })
       .then((estatisticas) => {
         console.log("Estatísticas recebidas:", estatisticas);
-
         renderizarGrafico(estatisticas);
       })
       .catch((erro) => {
@@ -176,22 +131,53 @@
   function renderizarGrafico(estatisticas) {
     const ctx = document.getElementById("grafico_pizza").getContext("2d");
 
-    var lista_dados = [estatisticas[0].qtdAcertos, estatisticas[0].qtdErros]
+    var lista_dados = [estatisticas[0].qtdAcertos, estatisticas[0].qtdErros];
+
+    detalhes.innerHTML = `
+        <p><b style="color: blue;">Acertou: </b>${
+          !estatisticas[0].qtdAcertos ? 0 : estatisticas[0].qtdAcertos
+        }</p>
+        <p><b style="color: red;" >Errou: </b>${
+          !estatisticas[0].qtdErros ? 0 : estatisticas[0].qtdErros
+        }</p>
+      `;
+
     new Chart(ctx, {
       type: "pie",
       data: {
         labels: ["Acertos", "Erros"],
         datasets: [
-          {            
+          {
             data: lista_dados,
             borderWidth: 1,
           },
         ],
       },
       options: {
-        scales: {
-         
-          
+        plugins: {
+          title: {
+            display: true, // Exibe o título
+            text: "Proficiência: erros e acertos do seu teste", // Texto do título
+            font: {
+              size: 27, // Tamanho da fonte
+              weight: "bold", // Peso da fonte
+            },
+            color: "black", // Cor do texto
+            padding: {
+              top: 10, // Espaçamento acima
+              bottom: 40, // Espaçamento abaixo
+            },
+          },
+          legend: {
+            display: true, // Exibe a legenda
+            position: "bottom", // Posição da legenda
+            labels: {
+              padding: 30, // Espaçamento entre gráfico e labels
+              font: {
+                size: 14, // Tamanho da fonte dos labels
+              },
+            },
+          },
         },
       },
     });
