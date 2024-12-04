@@ -70,6 +70,7 @@ body {
 }
 
 .content img {
+    border-radius: 3px;
     height: 150px;
     width: 240px;
     margin-right: 20px;
@@ -86,6 +87,7 @@ body {
 }
 
 .foto_inicial img{
+    border-radius: 5px;
     width: 100%;
     height: auto;
     margin-bottom: 30px; 
