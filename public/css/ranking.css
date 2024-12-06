@@ -1,0 +1,89 @@
+body {
+    margin: 0;
+    padding: 0;
+    /* background-image: url(../assets/backgroundeimgindex.peg.jpg);   */
+    background-size: cover;
+    font-family: 'Barlow', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+.background {
+    position: fixed;
+
+    width: 100%;
+    height: 100%;
+    background-image: url(../assets/backgroundeimgindex.peg.jpg); /* Caminho da sua imagem */
+    background-size: cover;
+    
+    filter: blur(5px); /* Aplica o desfoque na imagem */
+    z-index: -1; /* Coloca a imagem de fundo atrás do conteúdo */
+}
+
+.background::before {
+    content: "";
+    position: absolute;
+    /* top: 0;
+    left: 0; */
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1); 
+}
+
+/* Centralizando a div 'cadastro' */
+.content {
+    max-width: 70%;
+    background: linear-gradient(145deg, #ffffff, #f1f1f1);
+    padding: 65px;
+    border-radius: 10px;
+    margin: 5% auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    box-shadow: 17px 14px 8px 3px rgba(0, 0, 0, 0.25);
+    width: 96%;
+}
+
+
+
+/* Estilo para os texto e entradas */
+.content h1 {
+    display: flex;
+    justify-content: center;
+    font-size: 37px;
+    text-shadow: 1px 3px 2px rgba(0, 0, 0, 0.3);
+    color: black;
+    margin: 0;
+    margin-bottom: 55px;
+}
+
+
+.ranking {
+    font-size: 18px;
+    text-align: justify;
+    width: 85%;
+    display: flex;
+    
+}
+
+.ranking_title {
+    font-size: 20px;
+    text-align: center;
+    width: 85%;
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.coluna_nome {
+    display: flex;
+    flex-direction: column;
+}
+
+.coluna_acertos {
+    display: flex;
+    flex-direction: column;
+}
+
+.content_coluns {
+    margin: 0 10px 0 10px;
+}

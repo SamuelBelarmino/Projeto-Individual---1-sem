@@ -93,6 +93,19 @@ function listar_medias(idCadastro) {
     return database.executar(instrucaoSql);
 }
 
+function listar_ranking(idCadastro) {
+    
+    var instrucaoSql = `
+    SELECT idCadastro, nome, SUM(qtdAcertos) AS totalAcertos
+    FROM resultado 
+    JOIN cadastro ON fkCadastro = ${idCadastro} 
+    GROUP BY idCadastro, nome 
+    ORDER BY totalAcertos DESC;
+    `;
+   
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     autenticar,
     cadastrar,
@@ -101,5 +114,6 @@ module.exports = {
     historico,
     ver_historico,
     listar_medias,
-    listar_tentativas
+    listar_tentativas,
+    listar_ranking
 };

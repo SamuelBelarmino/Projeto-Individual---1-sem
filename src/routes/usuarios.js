@@ -36,4 +36,8 @@ router.get("/listar_medias/:idCadastro", function (req, res) {
     usuarioController.listar_medias(req, res);
 });
 
+router.get("/listar_ranking/:idCadastro", function (req, res) {
+    usuarioController.listar_ranking(req, res);
+});
+
 module.exports = router;

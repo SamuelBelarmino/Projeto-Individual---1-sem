@@ -55,6 +55,11 @@ body {
     color: black;
 }
 
+.foto img{
+    border-radius: 5px;
+    height: 388px;
+    width: 903px;
+}
 
 .texto {
     font-size: 18px;
@@ -69,11 +74,7 @@ body {
     text-indent: 2em; /* Indentação da primeira linha */
 }
 
-.content img {
-    height: 150px;
-    width: 240px;
-    margin-right: 20px;
-}
+
 
 .texto span {
     font-style: italic;     

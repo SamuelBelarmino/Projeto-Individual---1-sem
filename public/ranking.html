@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+
+    <link rel="icon" href="assets/flauta.png" type="image/x-icon" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Estatísticas - Music & Flutes</title>
+
+    <link rel="stylesheet" href="css/header2.css" />
+
+    <link rel="stylesheet" href="css/footer.css" />
+
+    <link rel="stylesheet" href="css/ranking.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body onload="carregarRanking()">
+    <div class="background"></div>
+    <!--header inicio-->
+    <header>
+      <nav class="navbar">
+        <div>
+          <a href="index.html">
+            <div class="logo">
+              <img src="assets/Music & Flutes - logo.png" alt="Logo" />
+            </div>
+          </a>
+        </div>
+
+        <span><a href="teoria.html">Teoria musical</a></span>
+
+        <span
+          ><a href="aprendaflauta.html"
+            >Aprenda flauta atraves de vídeos</a
+          ></span
+        >
+
+        <span><a href="teste.html">Teste seu conhecimento</a></span>
+
+        <span><a href="dash.html">Estatísticas</a></span>
+
+        <span><a href="ranking.html">Ranking</a></span>
+
+        <div class="container-botao">
+          <span class="botao">
+            <span class="botao_sair">
+              <a href="login2.html"><img src="assets/saida.png" alt="" /></a>
+            </span>
+          </span>
+        </div>
+      </nav>
+    </header>
+    <!--header fim-->
+
+    <div class="content">
+      <h1>Ranking</h1>
+
+      <div class="ranking" id="ranking_msg">
+
+      </div>
+      
+    </div>
+
+    <br><br><br>
+
+    <!--footer inicio-->
+    <footer class="footer">
+      <div class="content_footer">
+        <div class="logo_music">
+          <img src="assets/Music & Flutes - logo.png" />
+        </div>
+
+        <div class="inf_center_footer">
+          All rights reserved by Music & Flutes
+        </div>
+
+        <div class="inf_right_footer">© 2024</div>
+      </div>
+    </footer>
+    <!--footer fim-->
+  </body>
+</html>
+
+<script>
+const idCadastro = sessionStorage.ID_USUARIO;
+var ranking_list = [];
+function carregarRanking() {
+
+  fetch(`/usuarios/listar_ranking/${idCadastro}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((resposta) => resposta.json())
+    .then((ranking) => {
+      const rankingHtml = ranking.map((item) => {
+        return `${item.nome} - ${item.totalAcertos} acertos<br>`;
+      }).join('');
+
+      ranking_msg.innerHTML = rankingHtml.replaceAll(',', '');
+    })
+    .catch((erro) => {
+      console.error("Erro ao carregar estatísticas:", erro);
+    });
+}
+
+</script>
